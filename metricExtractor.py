@@ -90,7 +90,7 @@ def extractor(g, type=1):
 
     #     #BETWEENNESS WITH WEIGHT
     
-    _weight = np.array([1.0/x if x != 0.0 else 0 for x in _weight])
+    _weight = np.array([1.0/x if x >= 0.0 else 0 for x in _weight])
     g.vs['code'] = g.betweenness(weights = _weight)
     betweenness_removal_list = dinamicFunction(g.copy(), pairBuilder(g.copy(), g.betweenness(weights = _weight)),type)
     metricList.append(betweenness_removal_list)
