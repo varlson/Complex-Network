@@ -18,7 +18,7 @@ def step_by_step(graph, folder):
         
         pl.redraw()
         ctx = cairo.Context(pl.surface)
-        ctx.set_font_size(20)
+        ctx.set_font_size(35)
 
         drawer = TextDrawer(ctx, "Eff Glob = "+E, halign=TextDrawer.BOTTOM, )
         drawer.draw_at(1, 50, width=1000)

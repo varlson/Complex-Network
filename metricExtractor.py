@@ -53,6 +53,10 @@ def efficiencyRemovalFuncion(g, pair):
 
 def extractor(g, type=1):
      
+
+
+    flag = True
+    _weight=0
     switcher = {
         1: giantComponent,
         2: efficiencyRemovalFuncion,
@@ -78,27 +82,27 @@ def extractor(g, type=1):
     metricList.append(betweenness_removal_list)
     metricNameList.append("Betweenness")
     meanValue.append(sum(betweenness_removal_list[1:])/len(betweenness_removal_list))
-     
-    _weight = np.array(g.es['weight'])
-    strength = g.strength(weights = _weight)
-    g.vs['code'] = strength
-    strength_removal_list = dinamicFunction(g.copy(), pairBuilder(g.copy(), strength), type)
-    metricList.append(strength_removal_list)
-    metricNameList.append("Strength")
-    meanValue.append(sum(strength_removal_list[1:])/len(strength_removal_list))
-
-
-    #     #BETWEENNESS WITH WEIGHT
+    try:
+        _weight = np.array(g.es['weight'])
+    except:
+        flag = False
     
-    _weight = np.array([1.0/x if x >= 0.0 else 0 for x in _weight])
-    g.vs['code'] = g.betweenness(weights = _weight)
-    betweenness_removal_list = dinamicFunction(g.copy(), pairBuilder(g.copy(), g.betweenness(weights = _weight)),type)
-    metricList.append(betweenness_removal_list)
-    metricNameList.append("Betweenness with Weights")
-    meanValue.append(sum( betweenness_removal_list[1:])/len(betweenness_removal_list))
-    
+    if flag:
+        strength = g.strength(weights = _weight)
+        g.vs['code'] = strength
+        strength_removal_list = dinamicFunction(g.copy(), pairBuilder(g.copy(), strength), type)
+        metricList.append(strength_removal_list)
+        metricNameList.append("Strength")
+        meanValue.append(sum(strength_removal_list[1:])/len(strength_removal_list))
 
-    # # STRENGTH with WEIGHT
+    if flag:
+    #BETWEENNESS WITH WEIGHT
+        _weight = np.array([1.0/x if x >= 0.0 else 0 for x in _weight])
+        g.vs['code'] = g.betweenness(weights = _weight)
+        betweenness_removal_list = dinamicFunction(g.copy(), pairBuilder(g.copy(), g.betweenness(weights = _weight)),type)
+        metricList.append(betweenness_removal_list)
+        metricNameList.append("Betweenness with Weights")
+        meanValue.append(sum( betweenness_removal_list[1:])/len(betweenness_removal_list))
     
 
 
@@ -113,13 +117,13 @@ def extractor(g, type=1):
 
     
     # # # VULNERABILITY WITH WEIGHTS
-
-    vulnerability = calculator(g.copy(), True)
-    g.vs['code'] = vulnerability
-    vulnerability_removal_list = dinamicFunction(g.copy(), pairBuilder(g.copy(), vulnerability), type)
-    metricList.append(vulnerability_removal_list)
-    metricNameList.append("Vulnerability with Weights")
-    meanValue.append(sum(vulnerability_removal_list[1:])/len(vulnerability_removal_list))
+    if flag:
+        vulnerability = calculator(g.copy(), True)
+        g.vs['code'] = vulnerability
+        vulnerability_removal_list = dinamicFunction(g.copy(), pairBuilder(g.copy(), vulnerability), type)
+        metricList.append(vulnerability_removal_list)
+        metricNameList.append("Vulnerability with Weights")
+        meanValue.append(sum(vulnerability_removal_list[1:])/len(vulnerability_removal_list))
 
     
     # # RANDOM REMOVAL
