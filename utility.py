@@ -3,7 +3,7 @@ import numpy as np
 from os import path, mkdir
 from igraph import Plot
 from igraph.drawing.text import TextDrawer
-import cairo
+# import cairo
 
 def effGlobal(g, weighted=False): # global efficiency calculator
     eff= 0.0
@@ -119,10 +119,10 @@ def legend(g, name):
     plot.redraw()
 
     # Grab the surface, construct a drawing context and a TextDrawer
-    ctx = cairo.Context(plot.surface)
-    ctx.set_font_size(36)
-    drawer = TextDrawer(ctx, "Eff Glob "+name, halign=TextDrawer.BOTTOM, )
-    drawer.draw_at(0, 50, width=600)
+    # ctx = cairo.Context(plot.surface)
+    # ctx.set_font_size(36)
+    # drawer = TextDrawer(ctx, "Eff Glob "+name, halign=TextDrawer.BOTTOM, )
+    # drawer.draw_at(0, 50, width=600)
 
     # Save the plot
     # plot.save()
